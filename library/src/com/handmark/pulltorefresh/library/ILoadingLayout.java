@@ -54,4 +54,7 @@ public interface ILoadingLayout {
 	 */
 	public void setTextTypeface(Typeface tf);
 
+    public void enableAnimation();
+
+    public void disableAnimation();
 }

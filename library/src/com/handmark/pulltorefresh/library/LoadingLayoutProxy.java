@@ -70,4 +70,14 @@ public class LoadingLayoutProxy implements ILoadingLayout {
 			layout.setTextTypeface(tf);
 		}
 	}
+
+    @Override
+    public void enableAnimation() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void disableAnimation() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

@@ -107,4 +107,13 @@ public class RotateLoadingLayout extends LoadingLayout {
 		return R.drawable.default_ptr_rotate;
 	}
 
+    @Override
+    public void enableAnimation() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void disableAnimation() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

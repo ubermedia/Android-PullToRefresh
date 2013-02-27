@@ -253,6 +253,56 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 		}
 	}
 
+    public void enableLoadingLayoutAnimation(Mode mode) {
+        enableLoadingLayoutAnimationInner(mode);
+        switch (mode) {
+            case BOTH:
+                if (mHeaderLoadingView != null) {
+                    mHeaderLoadingView.enableAnimation();
+                }
+
+                if (mFooterLoadingView != null) {
+                    mFooterLoadingView.enableAnimation();
+                }
+                break;
+            case PULL_FROM_START:
+                if (mHeaderLoadingView != null) {
+                    mHeaderLoadingView.enableAnimation();
+                }
+                break;
+            case PULL_FROM_END:
+                if (mFooterLoadingView != null) {
+                    mFooterLoadingView.enableAnimation();
+                }
+                break;
+        }
+    }
+
+    public void disableLoadingLayoutAnimation(Mode mode) {
+        disableLoadingLayoutAnimationInner(mode);
+        switch (mode) {
+            case BOTH:
+                if (mHeaderLoadingView != null) {
+                    mHeaderLoadingView.disableAnimation();
+                }
+
+                if (mFooterLoadingView != null) {
+                    mFooterLoadingView.disableAnimation();
+                }
+                break;
+            case PULL_FROM_START:
+                if (mHeaderLoadingView != null) {
+                    mHeaderLoadingView.disableAnimation();
+                }
+                break;
+            case PULL_FROM_END:
+                if (mFooterLoadingView != null) {
+                    mFooterLoadingView.disableAnimation();
+                }
+                break;
+        }
+    }
+
 	@TargetApi(9)
 	final class InternalListViewSDK9 extends InternalListView {
 

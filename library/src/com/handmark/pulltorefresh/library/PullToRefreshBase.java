@@ -1066,6 +1066,54 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		}
 	}
 
+    protected void enableLoadingLayoutAnimationInner(Mode mode) {
+        switch (mode) {
+            case BOTH:
+                if (mHeaderLayout != null) {
+                    mHeaderLayout.enableAnimation();
+                }
+
+                if (mFooterLayout != null) {
+                    mFooterLayout.enableAnimation();
+                }
+                break;
+            case PULL_FROM_START:
+                if (mHeaderLayout != null) {
+                    mHeaderLayout.enableAnimation();
+                }
+                break;
+            case PULL_FROM_END:
+                if (mFooterLayout != null) {
+                    mFooterLayout.enableAnimation();
+                }
+                break;
+        }
+    }
+
+    protected void disableLoadingLayoutAnimationInner(Mode mode) {
+        switch (mode) {
+            case BOTH:
+                if (mHeaderLayout != null) {
+                    mHeaderLayout.disableAnimation();
+                }
+
+                if (mFooterLayout != null) {
+                    mFooterLayout.disableAnimation();
+                }
+                break;
+            case PULL_FROM_START:
+                if (mHeaderLayout != null) {
+                    mHeaderLayout.disableAnimation();
+                }
+                break;
+            case PULL_FROM_END:
+                if (mFooterLayout != null) {
+                    mFooterLayout.disableAnimation();
+                }
+                break;
+        }
+    }
+
 	@SuppressWarnings("deprecation")
 	private void init(Context context, AttributeSet attrs) {
 		switch (getPullToRefreshScrollDirection()) {
@@ -1299,7 +1347,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
          * This is the alternative for Android-PullToRefresh. Allows you to use any
          * fixed drawable for a Progress Bar.
          */
-        FIXED;
+        VARIABLE;
 
 		static AnimationStyle getDefault() {
 			return ROTATE;
@@ -1321,7 +1369,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				case 0x1:
 					return FLIP;
                 case 0x2:
-                    return FIXED;
+                    return VARIABLE;
 			}
 		}
 
@@ -1332,8 +1380,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					return new RotateLoadingLayout(context, mode, scrollDirection, attrs);
 				case FLIP:
 					return new FlipLoadingLayout(context, mode, scrollDirection, attrs);
-                case FIXED:
-                    return new FixedLoadingLayout(context, mode, scrollDirection, attrs);
+                case VARIABLE:
+                    return new VariableLoadingLayout(context, mode, scrollDirection, attrs);
 			}
 		}
 	}

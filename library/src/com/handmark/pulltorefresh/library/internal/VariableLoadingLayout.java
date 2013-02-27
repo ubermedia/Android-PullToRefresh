@@ -30,13 +30,15 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Orientation;
 import com.handmark.pulltorefresh.library.R;
 
 @SuppressLint("ViewConstructor")
-public class FixedLoadingLayout extends LoadingLayout {
+public class VariableLoadingLayout extends LoadingLayout {
 
 	static final int FLIP_ANIMATION_DURATION = 150;
 
 	private final Animation mRotateAnimation, mResetRotateAnimation;
+    // Enabled by default
+    private boolean mEnabled = true;
 
-	public FixedLoadingLayout(Context context, final Mode mode, final Orientation scrollDirection, TypedArray attrs) {
+	public VariableLoadingLayout(Context context, final Mode mode, final Orientation scrollDirection, TypedArray attrs) {
 		super(context, mode, scrollDirection, attrs);
 
 		final int rotateAngle = mode == Mode.PULL_FROM_START ? -180 : 180;
@@ -89,7 +91,7 @@ public class FixedLoadingLayout extends LoadingLayout {
 	@Override
 	protected void pullToRefreshImpl() {
 		// Only start reset Animation, we've previously show the rotate anim
-		if (mRotateAnimation == mHeaderImage.getAnimation()) {
+		if (mEnabled && mRotateAnimation == mHeaderImage.getAnimation()) {
 			mHeaderImage.startAnimation(mResetRotateAnimation);
 		}
 	}
@@ -97,12 +99,17 @@ public class FixedLoadingLayout extends LoadingLayout {
 	@Override
 	protected void refreshingImpl() {
 		mHeaderImage.clearAnimation();
-		mHeaderImage.setVisibility(View.INVISIBLE);
-		mHeaderProgress.setVisibility(View.VISIBLE);
+        if (mEnabled) {
+            mHeaderImage.setVisibility(View.INVISIBLE);
+            mHeaderProgress.setVisibility(View.VISIBLE);
+        }
 	}
 
 	@Override
 	protected void releaseToRefreshImpl() {
+        if (!mEnabled) {
+            return;
+        }
 		mHeaderImage.startAnimation(mRotateAnimation);
 	}
 
@@ -120,6 +127,11 @@ public class FixedLoadingLayout extends LoadingLayout {
 
 	private float getDrawableRotationAngle() {
 		float angle = 0f;
+
+        if (!mEnabled) {
+            return angle;
+        }
+
 		switch (mMode) {
 			case PULL_FROM_END:
 				if (mScrollDirection == Orientation.HORIZONTAL) {
@@ -142,4 +154,13 @@ public class FixedLoadingLayout extends LoadingLayout {
 		return angle;
 	}
 
+    @Override
+    public void enableAnimation() {
+        this.mEnabled = true;
+    }
+
+    @Override
+    public void disableAnimation() {
+        this.mEnabled = false;
+    }
 }

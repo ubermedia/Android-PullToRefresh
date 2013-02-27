@@ -143,4 +143,13 @@ public class FlipLoadingLayout extends LoadingLayout {
 		return angle;
 	}
 
+    @Override
+    public void enableAnimation() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void disableAnimation() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

@@ -34,11 +34,7 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.handmark.pulltorefresh.library.internal.FlipLoadingLayout;
-import com.handmark.pulltorefresh.library.internal.LoadingLayout;
-import com.handmark.pulltorefresh.library.internal.RotateLoadingLayout;
-import com.handmark.pulltorefresh.library.internal.Utils;
-import com.handmark.pulltorefresh.library.internal.ViewCompat;
+import com.handmark.pulltorefresh.library.internal.*;
 
 public abstract class PullToRefreshBase<T extends View> extends LinearLayout implements IPullToRefresh<T> {
 
@@ -1297,7 +1293,13 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		 * This is the old default, and what is commonly used on iOS. Uses an
 		 * arrow image which flips depending on where the user has scrolled.
 		 */
-		FLIP;
+		FLIP,
+
+        /**
+         * This is the alternative for Android-PullToRefresh. Allows you to use any
+         * fixed drawable for a Progress Bar.
+         */
+        FIXED;
 
 		static AnimationStyle getDefault() {
 			return ROTATE;
@@ -1318,6 +1320,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					return ROTATE;
 				case 0x1:
 					return FLIP;
+                case 0x2:
+                    return FIXED;
 			}
 		}
 
@@ -1328,6 +1332,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					return new RotateLoadingLayout(context, mode, scrollDirection, attrs);
 				case FLIP:
 					return new FlipLoadingLayout(context, mode, scrollDirection, attrs);
+                case FIXED:
+                    return new FixedLoadingLayout(context, mode, scrollDirection, attrs);
 			}
 		}
 	}

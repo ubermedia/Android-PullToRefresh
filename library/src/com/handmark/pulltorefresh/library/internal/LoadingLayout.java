@@ -347,6 +347,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	private void setSubHeaderText(CharSequence label) {
 		if (null != mSubHeaderText) {
 			if (TextUtils.isEmpty(label)) {
+                mSubHeaderText.setText(""); // See more details at reset() method
 				mSubHeaderText.setVisibility(View.GONE);
 			} else {
 				mSubHeaderText.setText(label);
